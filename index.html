@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miss Noe Online English</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root{
+            --bg:#08080c;--bg2:#0e0e14;--card:#13131b;--card-h:#1a1a24;
+            --brd:#1f1f2e;--brd-l:#2d2d40;--fg:#f2ede6;--fg-m:#908b9e;
+            --fg-d:#5c5770;--rose:#e07aa8;--rose-l:#f0a0c4;--rose-g:rgba(224,122,168,.12);
+            --gold:#c9a44e;--gold-l:#dcc07a;--gold-g:rgba(201,164,78,.1);
+            --lav:#8b6cc7;--mint:#6bc9a0
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--brd-l) var(--bg);overflow-x:hidden}
+        body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);overflow-x:hidden;line-height:1.6;-webkit-tap-highlight-color:transparent}
+        .fd{font-family:'Cormorant Garamond',serif}
+
+        /* ===== NAV ===== */
+        .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);border-bottom:1px solid var(--brd);transition:all .35s}
+        .nav.scrolled{background:rgba(8,8,12,.95);box-shadow:0 4px 40px rgba(0,0,0,.4)}
+        .nav-inner{max-width:1280px;margin:0 auto;padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+        @media(min-width:640px){.nav-inner{padding:0 24px;height:60px}}
+        .nav-link{position:relative;color:var(--fg-m);transition:color .3s;font-size:.84rem;letter-spacing:.02em;cursor:pointer;text-decoration:none;padding:4px 0}
+        .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--rose);transition:width .3s;border-radius:1px}
+        .nav-link:hover,.nav-link.active{color:var(--fg)}
+        .nav-link:hover::after,.nav-link.active::after{width:100%}
+        .nav-links{display:none;align-items:center;gap:20px}
+        @media(min-width:768px){.nav-links{display:flex}}
+        .nav-right{display:flex;align-items:center;gap:8px}
+        .search-box{display:none;align-items:center;gap:6px;background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:7px 12px;transition:border-color .3s;width:200px}
+        @media(min-width:768px){.search-box{display:flex}}
+        @media(min-width:1024px){.search-box{width:260px}}
+        .search-box:focus-within{border-color:var(--rose)}
+        .search-box input{background:none;border:none;outline:none;color:var(--fg);font-family:inherit;font-size:.82rem;width:100%}
+        .search-box input::placeholder{color:var(--fg-d)}
+        .cart-btn{position:relative;background:none;border:none;color:var(--fg-m);font-size:1.05rem;cursor:pointer;padding:8px;transition:color .3s}
+        .cart-btn:hover{color:var(--fg)}
+        .cart-badge{position:absolute;top:1px;right:0;width:16px;height:16px;border-radius:50%;background:var(--rose);color:#fff;font-size:.58rem;font-weight:700;display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .3s}
+        .cart-badge.show{transform:scale(1)}
+        .reg-btn{display:none}
+        @media(min-width:640px){.reg-btn{display:inline-flex}}
+        .mob-btn{display:flex;background:none;border:none;color:var(--fg);font-size:1.1rem;cursor:pointer;padding:8px}
+        @media(min-width:768px){.mob-btn{display:none}}
+
+        /* ===== LOGO ===== */
+        .logo-w{display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0}
+        .logo-w img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid var(--brd-l);transition:border-color .3s}
+        @media(min-width:640px){.logo-w img{width:38px;height:38px}}
+        .logo-w:hover img{border-color:var(--rose)}
+        .logo-t{display:flex;flex-direction:column;line-height:1.1}
+        .logo-n{font-size:.82rem;font-weight:600;color:var(--fg);letter-spacing:.01em}
+        .logo-s{font-size:.54rem;color:var(--fg-d);text-transform:uppercase;letter-spacing:.1em;font-weight:500}
+        @media(min-width:640px){.logo-n{font-size:.88rem}.logo-s{font-size:.58rem;letter-spacing:.12em}}
+
+        /* ===== BOTONES ===== */
+        .btn-p{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#c4658e,var(--rose));color:#fff;font-weight:600;font-size:.88rem;border-radius:10px;border:none;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;font-family:inherit;white-space:nowrap}
+        .btn-p::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.14),transparent);transform:translateX(-100%);transition:transform .5s}
+        .btn-p:hover::before{transform:translateX(100%)}
+        .btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(224,122,168,.28)}
+        .btn-o{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:transparent;color:var(--fg);font-weight:500;font-size:.88rem;border-radius:10px;border:1px solid var(--brd-l);cursor:pointer;transition:all .3s;font-family:inherit;white-space:nowrap}
+        .btn-o:hover{border-color:var(--rose);color:var(--rose);background:var(--rose-g);transform:translateY(-2px)}
+        .btn-sm{padding:8px 16px;font-size:.8rem;border-radius:9px}
+        .btn-danger{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.15);color:#f87171;padding:6px 10px;font-size:.76rem;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .3s}
+        .btn-danger:hover{background:rgba(248,113,113,.15)}
+
+        /* ===== HERO ===== */
+        .hero{min-height:100svh;position:relative;display:flex;align-items:center;overflow:hidden;padding:70px 0 40px}
+        @media(min-width:768px){.hero{padding:80px 0 50px}}
+        .hero-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 55% 50% at 28% 38%,rgba(224,122,168,.07) 0%,transparent 60%),radial-gradient(ellipse 45% 45% at 72% 32%,rgba(201,164,78,.05) 0%,transparent 50%),radial-gradient(ellipse 35% 35% at 55% 72%,rgba(139,108,199,.04) 0%,transparent 50%)}
+        .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--brd) 1px,transparent 1px),linear-gradient(90deg,var(--brd) 1px,transparent 1px);background-size:80px 80px;opacity:.08;mask-image:radial-gradient(ellipse 55% 55% at 50% 50%,black 12%,transparent 60%);-webkit-mask-image:radial-gradient(ellipse 55% 55% at 50% 50%,black 12%,transparent 60%)}
+        .hero-logo-float{position:absolute;border-radius:50%;overflow:hidden;border:2px solid var(--brd-l);box-shadow:0 20px 60px rgba(0,0,0,.4);animation:fl 8s ease-in-out infinite;opacity:.12;pointer-events:none}
+        @keyframes fl{0%,100%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-12px) rotate(-2deg)}}
+        .hero-title{font-size:clamp(2.2rem,7vw,4.8rem);font-weight:700;line-height:1.06;letter-spacing:-.02em}
+        .hero-title .aw{background:linear-gradient(135deg,var(--rose),var(--rose-l),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero-right{display:none}
+        @media(min-width:1024px){.hero-right{display:flex;flex-direction:column;gap:16px}}
+
+        /* ===== CARDS ===== */
+        .cc{background:var(--card);border:1px solid var(--brd);border-radius:14px;overflow:hidden;transition:all .4s;cursor:pointer}
+        .cc:hover{border-color:var(--brd-l);transform:translateY(-4px);box-shadow:0 14px 44px rgba(0,0,0,.3)}
+        .cc-img{position:relative;height:160px;overflow:hidden}
+        @media(min-width:640px){.cc-img{height:175px}}
+        .cc-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+        .cc:hover .cc-img img{transform:scale(1.05)}
+        .cc-img-ov{position:absolute;inset:0;background:linear-gradient(to top,var(--card) 0%,transparent 55%)}
+        .cc-badge{position:absolute;top:10px;left:10px;padding:3px 8px;border-radius:5px;font-size:.65rem;font-weight:600;backdrop-filter:blur(8px)}
+        .cc-body{padding:14px 16px 16px}
+        @media(min-width:640px){.cc-body{padding:16px 18px 18px}}
+        .cc-cat{font-size:.66rem;color:var(--rose);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:4px}
+        .cc-title{font-size:.92rem;font-weight:700;line-height:1.35;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        @media(min-width:640px){.cc-title{font-size:1rem}}
+        .cc-meta{display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--fg-d);margin-bottom:12px;flex-wrap:wrap}
+        .cc-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:11px;border-top:1px solid var(--brd)}
+        .cc-price{font-size:1.1rem;font-weight:800}
+        .cc-price-old{font-size:.76rem;color:var(--fg-d);text-decoration:line-through;font-weight:400;margin-left:5px}
+        .cc-rating{display:flex;align-items:center;gap:3px;font-size:.74rem}
+        .cc-rating i{color:var(--gold);font-size:.64rem}
+        .cc-status{margin-top:8px;padding:4px 10px;border-radius:7px;font-size:.72rem;text-align:center;font-weight:600}
+        .cc-owned{background:var(--rose-g);border:1px solid rgba(224,122,168,.15);color:var(--rose)}
+        .cc-cart{background:var(--gold-g);border:1px solid rgba(201,164,78,.15);color:var(--gold)}
+
+        /* ===== COURSE DETAIL ===== */
+        .ch{position:relative;height:220px;overflow:hidden}
+        @media(min-width:640px){.ch{height:280px}}
+        @media(min-width:1024px){.ch{height:340px}}
+        .ch img{width:100%;height:100%;object-fit:cover}
+        .ch-ov{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 6%,rgba(8,8,12,.6) 45%,rgba(8,8,12,.3) 100%)}
+        .lr{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:9px;transition:background .2s;cursor:pointer}
+        .lr:hover{background:var(--card-h)}
+        .lr.done .lc{background:var(--rose);border-color:var(--rose);color:#fff}
+        .lc{width:20px;height:20px;min-width:20px;border-radius:50%;border:1.5px solid var(--brd-l);display:flex;align-items:center;justify-content:center;font-size:.5rem;color:transparent;transition:all .2s}
+        .rb{height:5px;border-radius:99px;background:var(--brd);overflow:hidden;flex:1;min-width:0}
+        .rb-f{height:100%;border-radius:99px;background:var(--gold);transition:width 1s}
+        .sidebar-c{background:var(--card);border:1px solid var(--brd);border-radius:16px;padding:22px;position:relative}
+        @media(min-width:1024px){.sidebar-c{position:sticky;top:76px}}
+        .feat-item{display:flex;align-items:flex-start;gap:8px;font-size:.86rem;color:var(--fg-m)}
+        .feat-item i{color:var(--rose);margin-top:3px;flex-shrink:0;font-size:.78rem}
+
+        /* ===== PLAYER ===== */
+        .pw{position:relative;width:100%;padding-top:56.25%;background:#000;border-radius:12px;overflow:hidden}
+        .pp{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0c0c14,#12121c);gap:12px}
+        .pc{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--card);border:1px solid var(--brd);border-radius:10px;margin-top:8px;flex-wrap:nowrap;overflow:hidden}
+        .pb{flex:1;min-width:40px;height:4px;background:var(--brd);border-radius:99px;cursor:pointer;overflow:hidden}
+        .pb-f{height:100%;background:var(--rose);border-radius:99px;width:0%;transition:width .3s}
+        .pt-sidebar{background:var(--card);border:1px solid var(--brd);border-radius:14px;overflow:hidden}
+        @media(min-width:1024px){.pt-sidebar{position:sticky;top:76px;max-height:calc(100vh - 90px);overflow-y:auto}}
+        @media(max-width:1023px){.pt-sidebar{max-height:50vh;overflow-y:auto;margin-top:16px}}
+
+        /* ===== DASHBOARD ===== */
+        .dc{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:18px;transition:all .3s;cursor:pointer}
+        .dc:hover{border-color:var(--brd-l);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+
+        /* ===== CART ===== */
+        .cd{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:400px;background:var(--bg2);border-left:1px solid var(--brd);z-index:200;transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+        @media(min-width:640px){.cd{max-width:420px}}
+        .cd.open{transform:translateX(0)}
+        .co{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:199;opacity:0;pointer-events:none;transition:opacity .3s}
+        .co.open{opacity:1;pointer-events:all}
+        .ci{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--brd);transition:background .2s}
+        .ci:hover{background:var(--card)}
+
+        /* ===== FILTERS ===== */
+        .fb{padding:6px 14px;border-radius:99px;border:1px solid var(--brd);background:transparent;color:var(--fg-m);font-size:.78rem;cursor:pointer;transition:all .3s;font-family:inherit;white-space:nowrap;flex-shrink:0}
+        .fb:hover,.fb.active{border-color:var(--rose);color:var(--rose);background:var(--rose-g)}
+        .filters-wrap{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+        .filters-wrap::-webkit-scrollbar{display:none}
+
+        /* ===== TOAST ===== */
+        .toast{position:fixed;bottom:16px;right:16px;left:16px;max-width:400px;margin:0 auto;background:var(--card);border:1px solid var(--rose);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:8px;z-index:300;transform:translateY(100px);opacity:0;transition:all .4s;box-shadow:0 10px 40px rgba(0,0,0,.5);font-size:.84rem}
+        @media(min-width:640px){.toast{bottom:24px;right:24px;left:auto;margin:0}}
+        .toast.show{transform:translateY(0);opacity:1}
+
+        /* ===== MODAL ===== */
+        .mo{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:250;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;padding:16px}
+        .mo.active{opacity:1;pointer-events:all}
+        .mb{background:var(--card);border:1px solid var(--brd);border-radius:20px;padding:28px;max-width:420px;width:100%;transform:translateY(24px) scale(.96);transition:transform .4s;position:relative}
+        @media(min-width:640px){.mb{padding:34px}}
+        .mo.active .mb{transform:translateY(0) scale(1)}
+        .mi{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--brd);border-radius:9px;color:var(--fg);font-family:inherit;font-size:.88rem;outline:none;transition:border-color .3s}
+        .mi:focus{border-color:var(--rose)}
+        .mi::placeholder{color:var(--fg-d)}
+
+        /* ===== HELPERS ===== */
+        .sl{display:inline-flex;align-items:center;gap:7px;font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:12px}
+        .sl::before{content:'';width:16px;height:1px;background:var(--rose)}
+        .st{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:700;line-height:1.15;letter-spacing:-.02em;margin-bottom:12px}
+        .container{max-width:1280px;margin:0 auto;padding:0 16px}
+        @media(min-width:640px){.container{padding:0 24px}}
+        .rv{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+        .rv.v{opacity:1;transform:translateY(0)}
+        .rvd1{transition-delay:.1s}.rvd2{transition-delay:.2s}.rvd3{transition-delay:.3s}.rvd4{transition-delay:.4s}
+
+        /* ===== MOBILE MENU ===== */
+        .mm{position:fixed;inset:0;background:rgba(8,8,12,.97);backdrop-filter:blur(20px);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;pointer-events:none;transition:opacity .3s;padding:20px}
+        .mm.open{opacity:1;pointer-events:all}
+        .mm a{font-size:1.2rem;color:var(--fg);text-decoration:none;font-weight:600;transition:color .3s;padding:8px 0}
+        .mm a:hover{color:var(--rose)}
+        .mm-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--fg);font-size:1.2rem;cursor:pointer;padding:8px}
+
+        /* ===== SEARCH MOBILE ===== */
+        .mob-search{display:block;padding:8px 16px;background:var(--bg2);border-bottom:1px solid var(--brd)}
+        .mob-search .search-box{display:flex;width:100%;max-width:100%}
+        @media(min-width:768px){.mob-search{display:none}}
+
+        /* ===== FOOTER ===== */
+        .ft-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+        @media(min-width:640px){.ft-grid{grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}}
+
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+    </style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <div class="logo-w" onclick="navigate('home')">
+            <img src="https://z-cdn-media.chatglm.cn/files/d6d5398a-d5c0-4c60-9cd8-f2d80c4a4b9a.png?auth_key=1875775098-3e4df69ca410474799f50ad9bcdf2fa9-0-2b146927525904f9ec5d7af2a5bacfbe" alt="Miss Noe">
+            <div class="logo-t"><span class="logo-n">Miss Noe</span><span class="logo-s">Online English</span></div>
+        </div>
+        <div class="search-box">
+            <i class="fas fa-search" style="color:var(--fg-d);font-size:.76rem"></i>
+            <input type="text" placeholder="Buscar cursos..." id="searchInput" oninput="handleSearch(this.value)">
+        </div>
+        <div class="nav-links">
+            <a class="nav-link active" onclick="navigate('home')" id="navHome">Inicio</a>
+            <a class="nav-link" onclick="navigate('catalog')" id="navCatalog">Cursos</a>
+            <a class="nav-link" onclick="navigate('dashboard')" id="navDash">Mis Cursos</a>
+        </div>
+        <div class="nav-right">
+            <button class="cart-btn" onclick="toggleCart()" aria-label="Carrito"><i class="fas fa-shopping-bag"></i><span class="cart-badge" id="cartBadge">0</span></button>
+            <button class="btn-p btn-sm reg-btn" onclick="openModal()">Registrate</button>
+            <button class="mob-btn" onclick="document.getElementById('mm').classList.add('open')" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </div>
+</nav>
+
+<div class="mm" id="mm">
+    <button class="mm-close" onclick="this.parentElement.classList.remove('open')"><i class="fas fa-times"></i></button>
+    <div class="logo-w" style="margin-bottom:16px" onclick="navigate('home');document.getElementById('mm').classList.remove('open')">
+        <img src="https://z-cdn-media.chatglm.cn/files/d6d5398a-d5c0-4c60-9cd8-f2d80c4a4b9a.png?auth_key=1875775098-3e4df69ca410474799f50ad9bcdf2fa9-0-2b146927525904f9ec5d7af2a5bacfbe" alt="Miss Noe" style="width:42px;height:42px">
+        <div class="logo-t"><span class="logo-n" style="font-size:.95rem">Miss Noe</span><span class="logo-s">Online English</span></div>
+    </div>
+    <a onclick="navigate('home');document.getElementById('mm').classList.remove('open')">Inicio</a>
+    <a onclick="navigate('catalog');document.getElementById('mm').classList.remove('open')">Cursos</a>
+    <a onclick="navigate('dashboard');document.getElementById('mm').classList.remove('open')">Mis Cursos</a>
+    <button class="btn-p" style="margin-top:12px" onclick="document.getElementById('mm').classList.remove('open');openModal()">Registrate</button>
+</div>
+
+<div class="co" id="co" onclick="toggleCart()"></div>
+<div class="cd" id="cd">
+    <div style="padding:16px;border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <h3 style="font-weight:700;font-size:1rem"><i class="fas fa-shopping-bag" style="margin-right:7px;color:var(--rose)"></i>Tu carrito</h3>
+        <button style="background:none;border:none;color:var(--fg-m);font-size:1rem;cursor:pointer;padding:4px" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="flex:1;overflow-y:auto" id="cartItems"></div>
+    <div style="padding:16px;border-top:1px solid var(--brd);flex-shrink:0" id="cartFooter"></div>
+</div>
+
+<div class="mo" id="mo" onclick="if(event.target===this)closeModal()"><div class="mb" id="mb"></div></div>
+<div class="toast" id="toast"><i class="fas fa-check-circle" style="color:var(--rose);flex-shrink:0"></i><span id="toastMsg"></span></div>
+
+<main id="app"></main>
+
+<script>
+const LU='https://z-cdn-media.chatglm.cn/files/d6d5398a-d5c0-4c60-9cd8-f2d80c4a4b9a.png?auth_key=1875775098-3e4df69ca410474799f50ad9bcdf2fa9-0-2b146927525904f9ec5d7af2a5bacfbe';
+const C=[
+{id:1,title:"English from Zero: Tu Primera Ventana al Ingles",slug:"beginners",teacher:"Miss Noe",category:"Fundamentos",level:"A1-A2",levelColor:"var(--rose)",price:24.99,origPrice:69.99,rating:4.9,reviews:1847,students:8240,img:"eng-begin3",hours:12,lessons:48,desc:"El punto de partida perfecto con Miss Noe: saludos, vocabulario diario, gramatica elemental y conversaciones basicas explicadas con claridad.",updated:"Enero 2025",lang:"Espanol + Ingles",tags:["Pronunciacion desde cero","Vocabulario esencial","Present Simple","Conversaciones reales","Numeros y fechas"],ll:[{s:"Bienvenida y primeros pasos",l:[{t:"Conoce a Miss Noe y el curso",d:"5:10",free:true},{t:"El alfabeto y sonidos",d:"8:30",free:true},{t:"Saludos y presentaciones",d:"12:20"}]},{s:"Unidad 1: Tu vida cotidiana",l:[{t:"Rutina diaria",d:"11:40"},{t:"Present Simple afirmativo",d:"16:10"},{t:"Present Simple negativo",d:"14:50"},{t:"Hobbies y gustos",d:"12:30"},{t:"Listening con dialogos",d:"9:20"}]},{s:"Unidad 2: Navegando la ciudad",l:[{t:"Lugares y direcciones",d:"13:00"},{t:"There is / There are",d:"11:45"},{t:"Pedir y dar direcciones",d:"15:20"},{t:"Numeros y precios",d:"10:10"},{t:"Role-play: supermercado",d:"11:30"}]},{s:"Unidad 3: Comida y restaurante",l:[{t:"Vocabulario de comida",d:"13:50"},{t:"Contables e incontables",d:"12:40"},{t:"Pedir en restaurante",d:"16:00"},{t:"Some / any / much / many",d:"11:50"},{t:"Escena: cenando",d:"10:40"}]},{s:"Unidad 4: Tiempo y fechas",l:[{t:"Dias, meses, estaciones",d:"8:50"},{t:"Preposiciones: in, on, at",d:"12:20"},{t:"Hablar del clima",d:"11:30"},{t:"Introduccion Past Simple",d:"14:40"},{t:"Repaso general",d:"16:10"}]}],rl:[{name:"Lucia Fernandez",img:"lucia-f3",text:"Miss Noe tiene una paciencia increible. Llegue sin saber nada y ahora puedo pedir un cafe en Londres.",r:5,date:"Hace 1 semana"},{name:"Roberto Gomez",img:"roberto-g3",text:"La energia de Miss Noe te motiva a seguir. Cada clase sientes que avanzas de verdad.",r:5,date:"Hace 3 semanas"},{name:"Patricia Morales",img:"patricia-m3",text:"Curso excelente. Me gustaria mas escritura pero lo demas es de 10.",r:4,date:"Hace 1 mes"}]},
+{id:2,title:"Business English: Comunicacion Profesional",slug:"business",teacher:"Miss Noe",category:"Negocios",level:"B1-B2",levelColor:"var(--gold)",price:44.99,origPrice:119.99,rating:4.9,reviews:956,students:3810,img:"business-eng3",hours:18,lessons:62,desc:"Domina el ingles corporativo: emails, reuniones, presentaciones y negociaciones con Miss Noe.",updated:"Diciembre 2024",lang:"90% Ingles",tags:["Emails formales","Reuniones","Presentaciones","Negociaciones","Vocabulario corporativo"],ll:[{s:"Modulo 1: Primera impresion",l:[{t:"Tu elevator pitch",d:"10:50",free:true},{t:"Networking y small talk",d:"12:30",free:true},{t:"Vocabulario de oficina",d:"11:20"}]},{s:"Modulo 2: Emails",l:[{t:"Estructura de email formal",d:"13:40"},{t:"Frases para solicitudes",d:"11:10"},{t:"Dar malas noticias",d:"13:20"},{t:"Templates comunes",d:"9:40"}]},{s:"Modulo 3: Reuniones",l:[{t:"Dirigir una reunion",d:"15:30"},{t:"Acordar y discrepar",d:"13:10"},{t:"Preguntas de clarificacion",d:"11:00"},{t:"Simulacion completa",d:"18:20"}]},{s:"Modulo 4: Presentaciones",l:[{t:"Estructura de presentacion",d:"13:50"},{t:"Lenguaje de transicion",d:"11:40"},{t:"Preguntas del publico",d:"14:30"},{t:"Lenguaje corporal",d:"10:10"},{t:"Presentacion final",d:"19:00"}]},{s:"Modulo 5: Negociaciones",l:[{t:"Vocabulario de negociacion",d:"12:40"},{t:"Hacer propuestas",d:"13:50"},{t:"Condicionales en negocios",d:"11:50"},{t:"Role-play: salarial",d:"17:30"}]}],rl:[{name:"Andres Ruiz",img:"andres-r3",text:"Este curso me consiguio un trabajo internacional. Las simulaciones de reuniones son lo mas util.",r:5,date:"Hace 2 semanas"},{name:"Carolina Vega",img:"carolina-v3",text:"Miss Noe hace que lo corporativo no sea aburrido. Sus ejemplos reales lo cambian todo.",r:5,date:"Hace 1 mes"}]},
+{id:3,title:"IELTS Prep: Objetivo Band 7.0+",slug:"ielts",teacher:"Miss Noe",category:"Preparacion",level:"B2-C1",levelColor:"#e07aa8",price:59.99,origPrice:149.99,rating:4.8,reviews:734,students:2450,img:"ielts-prep3",hours:24,lessons:78,desc:"Preparacion intensiva IELTS Academic y General. Estrategias, simulacros reales y feedback detallado.",updated:"Noviembre 2024",lang:"100% Ingles",tags:["Reading strategies","Writing Task 1 & 2","Listening","Speaking practice","Mock exams"],ll:[{s:"Todo sobre el IELTS",l:[{t:"Formato del examen",d:"14:20",free:true},{t:"Criterios de evaluacion",d:"12:00",free:true},{t:"Plan de estudio",d:"8:40"}]},{s:"Listening",l:[{t:"Estrategias Sections 1-4",d:"17:00"},{t:"Mapas y diagramas",d:"13:50"},{t:"Multiple choice",d:"12:40"},{t:"Trampas comunes",d:"10:10"},{t:"Mock test Listening",d:"34:00"}]},{s:"Reading",l:[{t:"Skimming y scanning",d:"15:20"},{t:"True/False/Not Given",d:"17:40"},{t:"Heading matching",d:"13:30"},{t:"Gestion del tiempo",d:"9:40"},{t:"Mock test Reading",d:"60:00"}]},{s:"Writing",l:[{t:"Task 1 descriptivo",d:"15:10"},{t:"Task 1 procesos",d:"13:30"},{t:"Task 2 estructuras",d:"17:00"},{t:"Vocabulario avanzado",d:"12:50"},{t:"Cohesion",d:"11:20"},{t:"Practica con feedback",d:"24:00"}]},{s:"Speaking",l:[{t:"Part 1 fluidez",d:"13:20"},{t:"Part 2 cue card",d:"15:10"},{t:"Part 3 argumentos",d:"14:40"},{t:"Idiomatic language",d:"11:00"},{t:"Mock Speaking",d:"14:20"}]}],rl:[{name:"Sofia Herrera",img:"sofia-h3",text:"Saque un 7.5 en mi primer intento. Los simulacros en condiciones reales hacen la diferencia.",r:5,date:"Hace 1 semana"},{name:"Miguel Torres",img:"miguel-t3",text:"La forma en que Miss Noe explica los criterios es unica.",r:5,date:"Hace 3 semanas"}]},
+{id:4,title:"Pronunciacion Perfecta: Habla Como Nativa",slug:"pronunciation",teacher:"Miss Noe",category:"Habilidades",level:"A2-B2",levelColor:"var(--rose)",price:29.99,origPrice:79.99,rating:4.8,reviews:523,students:3190,img:"pronunciation-m3",hours:10,lessons:40,desc:"Corrige tu acento y habla con claridad. Fonetica, minimal pairs, entonacion y rhythm natural.",updated:"Octubre 2024",lang:"Espanol + Ingles",tags:["Fonetica paso a paso","Minimal pairs","Entonacion","Rhythm","Britanico vs Americano"],ll:[{s:"Fundamentos",l:[{t:"Como se producen los sonidos",d:"10:40",free:true},{t:"Alfabeto fonetico",d:"14:10",free:true}]},{s:"Vocales",l:[{t:"Vocales cortas",d:"15:20"},{t:"Vocales largas",d:"13:40"},{t:"Diptongos",d:"14:50"},{t:"Minimal pairs vocales",d:"11:20"}]},{s:"Consonantes",l:[{t:"El sonido /th/",d:"13:00"},{t:"R vs L",d:"15:40"},{t:"V vs B, S vs Z",d:"13:20"},{t:"Consonant clusters",d:"11:00"}]},{s:"Connected Speech",l:[{t:"Linking natural",d:"13:40"},{t:"Formas debiles",d:"11:50"},{t:"Elision",d:"13:10"},{t:"Ritmo y acento",d:"15:20"}]}],rl:[{name:"Diego Luna",img:"diego-l3",text:"Por fin pronuncio el 'th'. Anos intentandolo y Miss Noe lo logro en una clase.",r:5,date:"Hace 2 semanas"},{name:"Valentina Cruz",img:"valentina-c3",text:"Connected speech cambio mi vida. Ahora entiendo a los nativos rapido.",r:5,date:"Hace 1 mes"}]},
+{id:5,title:"Travel English: Viaja Sin Miedo",slug:"travel",teacher:"Miss Noe",category:"Practico",level:"A1-B1",levelColor:"var(--mint)",price:16.99,origPrice:44.99,rating:4.7,reviews:489,students:4520,img:"travel-eng3",hours:8,lessons:32,desc:"Todo el ingles para viajar: aeropuerto, hotel, restaurante, transporte y emergencias.",updated:"Enero 2025",lang:"Espanol + Ingles",tags:["Aeropuerto","Hotel","Restaurante","Transporte","Emergencias","Shopping"],ll:[{s:"Antes de volar",l:[{t:"Aeropuerto vocabulario",d:"11:40",free:true},{t:"Check-in y seguridad",d:"10:00",free:true},{t:"Embarque y vuelo",d:"9:10"}]},{s:"Alojamiento",l:[{t:"Inmigracion",d:"10:40"},{t:"Check-in hotel",d:"13:50"},{t:"Reportar problemas",d:"9:50"},{t:"Tipos de alojamiento",d:"8:20"}]},{s:"Comer por el mundo",l:[{t:"Pedir comida",d:"12:40"},{t:"Restricciones alimentarias",d:"8:50"},{t:"Propinas",d:"7:30"},{t:"Quejarse educadamente",d:"10:40"}]},{s:"Moverse y emergencias",l:[{t:"Transporte publico",d:"11:20"},{t:"Direcciones",d:"13:00"},{t:"Farmacia",d:"9:40"},{t:"Hospital",d:"13:50"},{t:"Frases de emergencia",d:"8:00"}]}],rl:[{name:"Gabriela Rojas",img:"gabriela-r3",text:"Me senti segura en cada situacion durante mi viaje a Europa.",r:5,date:"Hace 4 dias"},{name:"Fernando Diaz",img:"fernando-d3",text:"Directo al grano. Sin teoria innecesaria.",r:5,date:"Hace 2 semanas"}]},
+{id:6,title:"Advanced Grammar: Estructuras que Impresionan",slug:"advanced-grammar",teacher:"Miss Noe",category:"Gramatica",level:"B2-C2",levelColor:"#e07aa8",price:34.99,origPrice:89.99,rating:4.9,reviews:342,students:1820,img:"adv-grammar3",hours:15,lessons:52,desc:"Condicionales avanzados, pasiva sofisticada, reported speech y recursos que elevan tu ingles.",updated:"Diciembre 2024",lang:"100% Ingles",tags:["Mixed conditionals","Passive avanzado","Reported speech","Inversion","Cleft sentences"],ll:[{s:"Conditionals avanzados",l:[{t:"Third conditional",d:"11:20",free:true},{t:"Mixed conditionals",d:"14:40",free:true},{t:"Sin 'if'",d:"12:50"}]},{s:"Passive Voice",l:[{t:"Transformaciones",d:"13:20"},{t:"Impersonales",d:"11:40"},{t:"Reporting verbs pasiva",d:"11:00"},{t:"Get-passive",d:"10:00"}]},{s:"Reported Speech",l:[{t:"Backshift complejo",d:"13:40"},{t:"Preguntas y comandos",d:"11:20"},{t:"Patrones de verbs",d:"12:30"},{t:"Free indirect speech",d:"10:20"}]},{s:"Estructuras sofisticadas",l:[{t:"Inversion",d:"13:40"},{t:"Cleft sentences",d:"11:50"},{t:"Fronting",d:"10:50"},{t:"Subjuntivo moderno",d:"10:10"}]}],rl:[{name:"Ricardo Mendez",img:"ricardo-m3",text:"Anos atascado en B2 y este curso me impulso al C1.",r:5,date:"Hace 1 semana"},{name:"Isabel Navarro",img:"isabel-n3",text:"Finalmente entiendo los mixed conditionals.",r:5,date:"Hace 3 semanas"}]},
+{id:7,title:"English for Tech: El Idioma Digital",slug:"tech-english",teacher:"Miss Noe",category:"Especializado",level:"B1-C1",levelColor:"var(--gold)",price:39.99,origPrice:99.99,rating:4.8,reviews:298,students:1560,img:"tech-english3",hours:14,lessons:46,desc:"Ingles tech: jerga de startups, software, agile y entrevistas tecnicas.",updated:"Noviembre 2024",lang:"90% Ingles",tags:["Startup jargon","Software vocabulary","Agile/Scrum","Code reviews","Tech interviews"],ll:[{s:"Ecosistema Tech",l:[{t:"Vocabulario startups",d:"12:00",free:true},{t:"Roles tech",d:"9:50",free:true},{t:"Funding terms",d:"13:20"}]},{s:"Desarrollo",l:[{t:"Ciclo de desarrollo",d:"12:40"},{t:"Code review language",d:"11:30"},{t:"Debugging terms",d:"10:20"},{t:"Git vocabulary",d:"9:50"}]},{s:"Agile",l:[{t:"Sprint planning",d:"13:20"},{t:"Standup phrases",d:"10:50"},{t:"Retrospective",d:"12:20"},{t:"User stories",d:"9:40"}]},{s:"Entrevistas Tech",l:[{t:"Presentarte",d:"11:20"},{t:"Decisiones tecnicas",d:"14:10"},{t:"System design",d:"13:30"},{t:"Negociacion salarial",d:"11:20"}]}],rl:[{name:"Alejandro Vargas",img:"alejandro-v3",text:"Como developer, esto me abrio puertas internacionales.",r:5,date:"Hace 5 dias"},{name:"Daniela Pinto",img:"daniela-p3",text:"El vocabulario de startups es oro puro.",r:5,date:"Hace 2 semanas"}]},
+{id:8,title:"Conversation Club: Habla con Fluidez",slug:"conversation",teacher:"Miss Noe",category:"Practico",level:"A2-B2",levelColor:"var(--rose)",price:21.99,origPrice:54.99,rating:4.9,reviews:612,students:3890,img:"conversation-c3",hours:9,lessons:36,desc:"Practica conversacional intensiva: debates, role-plays, idioms y pensar en ingles.",updated:"Enero 2025",lang:"85% Ingles",tags:["Debates","Role-plays","Idioms","Phrasal verbs","Thinking in English"],ll:[{s:"Construyendo fluidez",l:[{t:"Dejar de traducir",d:"13:40",free:true},{t:"Filler words naturales",d:"9:50",free:true},{t:"Comprar tiempo",d:"8:50"}]},{s:"Conversaciones sociales",l:[{t:"Hablar de ti",d:"11:20"},{t:"Follow-up questions",d:"10:40"},{t:"Opiniones con matices",d:"12:30"},{t:"Acordar y discrepar",d:"13:20"}]},{s:"Idioms esenciales",l:[{t:"20 idioms clave",d:"14:10"},{t:"Phrasal verbs diarios",d:"13:40"},{t:"Slang informal",d:"11:50"},{t:"Usar idioms naturalmente",d:"10:20"}]},{s:"Escenarios reales",l:[{t:"Entrevista de trabajo",d:"15:00"},{t:"Conocer gente nueva",d:"12:10"},{t:"Debate defender opinion",d:"14:40"},{t:"Resumen final",d:"10:30"}]}],rl:[{name:"Natalia Ortega",img:"natalia-o3",text:"Dejar de traducir en la cabeza me cambio la vida.",r:5,date:"Hace 1 semana"},{name:"Javier Castillo",img:"javier-c3",text:"Los role-plays son lo mejor. Sientes que estas en una conversacion real.",r:5,date:"Hace 3 semanas"}]}
+];
+
+let cart=[],purchased=[],progress={},V='home',CC=null,CL=null,AF='Todos',SQ='';
+try{const s=JSON.parse(localStorage.getItem('mn2'));if(s){cart=s.c||[];purchased=s.p||[];progress=s.g||{};}}catch(e){}
+function save(){const p={};for(const k in progress)p[k]={cl:[...progress[k].cl],cu:progress[k].cu};localStorage.setItem('mn2',JSON.stringify({c:cart,p:purchased,g:p}));}
+function nav(v,d){V=v;if(d!==undefined)CC=d;window.scrollTo({top:0,behavior:'instant'});render();uNav();}
+function uNav(){document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));const m={home:'navHome',catalog:'navCatalog',dashboard:'navDash'};if(m[V])document.getElementById(m[V])?.classList.add('active');if(V==='course-detail'||V==='player')document.getElementById('navCatalog')?.classList.add('active');}
+
+function render(){
+const a=document.getElementById('app');
+switch(V){
+case'home':a.innerHTML=rHome();break;case'catalog':a.innerHTML=rCat();break;
+case'course-detail':a.innerHTML=rCD();break;case'player':a.innerHTML=rPL();break;
+case'dashboard':a.innerHTML=rDash();break;default:a.innerHTML=rHome();
+}
+setTimeout(()=>{document.querySelectorAll('.rv').forEach(el=>{const o=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('v');o.unobserve(en.target)}})},{threshold:.06});o.observe(el)});},30);
+}
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>30));
+
+function rCC(c,i=0){const o=purchased.includes(c.id),ic=cart.find(x=>x.id===c.id),d=Math.round((1-c.price/c.origPrice)*100);return`<div class="cc rv rvd${Math.min(i+1,4)}" onclick="nav('course-detail',${c.id})"><div class="cc-img"><img src="https://picsum.photos/seed/${c.img}/600/400.jpg" alt="${c.title}" loading="lazy"><div class="cc-img-ov"></div><span class="cc-badge" style="background:rgba(8,8,12,.7);color:${c.levelColor}">${c.level}</span>${d>=30?`<span class="cc-badge" style="right:10px;left:auto;background:rgba(224,122,168,.9);color:#fff">-${d}%</span>`:''}</div><div class="cc-body"><div class="cc-cat">${c.category}</div><div class="cc-title">${c.title}</div><div class="cc-meta"><span>${c.teacher}</span><span style="color:var(--brd-l)">|</span><span><i class="far fa-clock" style="margin-right:2px"></i>${c.hours}h</span><span style="color:var(--brd-l)">|</span><span>${c.lessons} clases</span></div><div class="cc-bottom" onclick="event.stopPropagation()"><div><span class="cc-price">$${c.price}</span><span class="cc-price-old">$${c.origPrice}</span></div><div class="cc-rating"><span style="font-weight:600;color:var(--fg)">${c.rating}</span><i class="fas fa-star"></i><span style="color:var(--fg-d)">(${c.reviews.toLocaleString('es-ES')})</span></div></div>${o?'<div class="cc-status cc-owned"><i class="fas fa-check" style="margin-right:3px"></i>Comprado</div>':ic?'<div class="cc-status cc-cart"><i class="fas fa-shopping-bag" style="margin-right:3px"></i>En el carrito</div>':''}</div></div>`;}
+
+function rHome(){
+const f=C.slice(0,4),t=[...C].sort((a,b)=>b.rating-a.rating).slice(0,4);
+return`
+<section class="hero"><div class="hero-mesh"></div><div class="hero-grid"></div>
+<img src="${LU}" alt="" class="hero-logo-float" style="width:140px;height:140px;top:12%;right:5%">
+<img src="${LU}" alt="" class="hero-logo-float" style="width:90px;height:90px;bottom:15%;left:3%;animation-delay:-3s;opacity:.08">
+<div class="container" style="position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:32px;align-items:center">
+<div>
+<div class="rv" style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border:1px solid var(--brd-l);border-radius:99px;background:var(--card);font-size:.72rem;color:var(--rose);letter-spacing:.03em;margin-bottom:18px">
+<span style="width:5px;height:5px;background:var(--rose);border-radius:50%;animation:pls 2s infinite"></span>
+<style>@keyframes pls{0%,100%{opacity:1}50%{opacity:.3}}</style>
+ ${C.length} cursos — Clases gratis
+</div>
+<h1 class="hero-title fd rv rvd1">Aprende ingles<br>con <span class="aw">Miss Noe</span></h1>
+<p class="rv rvd2" style="color:var(--fg-m);font-size:clamp(.95rem,2.5vw,1.05rem);max-width:460px;margin:18px 0 0;line-height:1.75">Cursos pregrabados para aprender a tu ritmo. Compra una vez, accede para siempre.</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:28px" class="rv rvd3">
+<button class="btn-p" onclick="nav('catalog')"><span>Explorar cursos</span><i class="fas fa-arrow-right" style="font-size:.75rem"></i></button>
+<button class="btn-o" onclick="nav('dashboard')"><i class="fas fa-play" style="font-size:.65rem"></i><span>Mis cursos</span></button>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;font-size:.84rem;color:var(--fg-m)" class="rv rvd4">
+<span><strong style="color:var(--rose)">${C.reduce((a,c)=>a+c.students,0).toLocaleString('es-ES')}</strong> estudiantes</span>
+<span><strong style="color:var(--gold)">${(C.reduce((a,c)=>a+c.rating,0)/C.length).toFixed(1)}</strong> valoracion</span>
+<span><strong>${C.reduce((a,c)=>a+c.lessons,0)}</strong> lecciones</span>
+</div>
+</div>
+<div class="hero-right">
+<div style="background:var(--card);border:1px solid var(--brd);border-radius:16px;padding:20px;display:flex;align-items:center;gap:14px">
+<img src="${LU}" alt="Miss Noe" style="width:50px;height:50px;border-radius:50%;border:2px solid var(--brd-l);flex-shrink:0">
+<div><div style="font-weight:700;font-size:1rem">Miss Noe</div><div style="font-size:.78rem;color:var(--fg-d)">Profesora certificada TEFL</div><div style="font-size:.76rem;color:var(--rose);margin-top:2px"><i class="fas fa-star" style="font-size:.6rem"></i> 4.9 — ${C.reduce((a,c)=>a+c.reviews,0).toLocaleString('es-ES')} resenas</div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div style="background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:800;color:var(--rose)">${C.length}</div><div style="font-size:.72rem;color:var(--fg-d);margin-top:1px">Cursos</div></div>
+<div style="background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:800;color:var(--gold)">${C.reduce((a,c)=>a+c.hours,0)}h</div><div style="font-size:.72rem;color:var(--fg-d);margin-top:1px">Contenido</div></div>
+<div style="background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:800;color:var(--lav)">A1</div><div style="font-size:.72rem;color:var(--fg-d);margin-top:1px">a C2</div></div>
+<div style="background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:800;color:var(--mint)">100%</div><div style="font-size:.72rem;color:var(--fg-d);margin-top:1px">Acceso vitalicio</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section style="padding:60px 0 30px"><div class="container"><div style="display:flex;align-items:end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:10px"><div><div class="sl rv">Populares</div><h2 class="st fd rv rvd1">Cursos mas buscados</h2></div><a class="nav-link rv rvd2" onclick="nav('catalog')" style="font-size:.86rem">Ver todos <i class="fas fa-arrow-right" style="font-size:.68rem;margin-left:2px"></i></a></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">${f.map((c,i)=>rCC(c,i)).join('')}</div></div></section>
+
+<section style="padding:40px 0 60px"><div class="container"><div style="display:flex;align-items:end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:10px"><div><div class="sl rv">Top Rated</div><h2 class="st fd rv rvd1">Los favoritos</h2></div><a class="nav-link rv rvd2" onclick="nav('catalog')" style="font-size:.86rem">Ver todos <i class="fas fa-arrow-right" style="font-size:.68rem;margin-left:2px"></i></a></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">${t.map((c,i)=>rCC(c,i)).join('')}</div></div></section>
+
+<section style="padding:60px 0;border-top:1px solid var(--brd)"><div class="container" style="max-width:960px"><div style="text-align:center;margin-bottom:40px"><div class="sl rv" style="justify-content:center">Como funciona</div><h2 class="st fd rv rvd1">Tu aprendizaje en 3 pasos</h2></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px">${[{icon:'fa-search',n:'01',t:'Encuentra tu curso',d:'Navega el catalogo, filtra por nivel y mira las clases gratis antes de comprar.'},{icon:'fa-credit-card',n:'02',t:'Compra una vez',d:'Pago unico, sin suscripciones. Tu curso es tuyo para siempre.'},{icon:'fa-graduation-cap',n:'03',t:'Aprende a tu ritmo',d:'Ve las clases cuando quieras, las veces que quieras. Marca tu progreso.'}].map((s,i)=>`<div class="rv rvd${i+1}" style="text-align:center;padding:28px 18px"><div style="width:48px;height:48px;border-radius:13px;background:var(--rose-g);border:1px solid rgba(224,122,168,.1);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px"><i class="fas ${s.icon}" style="color:var(--rose);font-size:.95rem"></i></div><div style="font-size:.7rem;color:var(--fg-d);margin-bottom:4px;font-weight:600">PASO ${s.n}</div><h4 style="font-size:1rem;font-weight:700;margin-bottom:6px">${s.t}</h4><p style="color:var(--fg-m);font-size:.86rem;line-height:1.6">${s.d}</p></div>`).join('')}</div></div></section>
+
+<section style="padding:80px 0;border-top:1px solid var(--brd);position:relative;overflow:hidden"><div style="position:absolute;inset:0;background:radial-gradient(ellipse 40% 60% at 38% 50%,rgba(224,122,168,.08),transparent),radial-gradient(ellipse 30% 50% at 65% 50%,rgba(201,164,78,.05),transparent)"></div><div class="container" style="max-width:720px;text-align:center;position:relative;z-index:1"><h2 class="fd rv" style="font-size:clamp(1.6rem,4vw,2.6rem);font-weight:700;line-height:1.1;margin-bottom:14px">Empieza hoy con Miss Noe</h2><p class="rv rvd1" style="color:var(--fg-m);font-size:clamp(.9rem,2vw,1rem);margin-bottom:24px">Cada curso tiene clases gratuitas. Sin riesgo, sin compromiso.</p><button class="btn-p rv rvd2" style="padding:14px 34px;font-size:.92rem" onclick="nav('catalog')"><span>Ver todos los cursos</span><i class="fas fa-arrow-right" style="font-size:.75rem"></i></button></div></section>
+ ${rFT()}`;}
+
+function rCat(){
+const cats=['Todos',...new Set(C.map(c=>c.category))];
+const fl=C.filter(c=>{const mc=AF==='Todos'||c.category===AF;const ms=!SQ||c.title.toLowerCase().includes(SQ.toLowerCase())||c.teacher.toLowerCase().includes(SQ.toLowerCase())||c.category.toLowerCase().includes(SQ.toLowerCase());return mc&&ms;});
+return`
+<div class="mob-search"><div class="search-box"><i class="fas fa-search" style="color:var(--fg-d);font-size:.76rem"></i><input type="text" placeholder="Buscar cursos..." value="${SQ}" oninput="SQ=this.value;render()"></div></div>
+<section style="padding:80px 0 60px"><div class="container"><div style="margin-bottom:24px"><div class="sl rv">Catalogo</div><h2 class="st fd rv rvd1">Todos los cursos</h2></div>
+<div class="rv rvd2 filters-wrap" style="margin-bottom:24px">${cats.map(cat=>`<button class="fb ${AF===cat?'active':''}" onclick="AF='${cat}';render()">${cat}</button>`).join('')}</div>
+ ${fl.length===0?'<div style="text-align:center;padding:50px 16px;color:var(--fg-d)"><i class="fas fa-search" style="font-size:1.6rem;margin-bottom:12px;display:block"></i>Sin resultados.</div>'
+:`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">${fl.map((c,i)=>rCC(c,i)).join('')}</div>`}
+</div></section>${rFT()}`;}
+function handleSearch(v){SQ=v;if(V==='catalog')render();else if(v.length>=2)nav('catalog');}
+
+function rCD(){
+const c=C.find(x=>x.id===CC);if(!c)return'<div class="container" style="padding:120px 16px;text-align:center;color:var(--fg-d)">Curso no encontrado</div>';
+const o=purchased.includes(c.id),ic=cart.find(x=>x.id===c.id),d=Math.round((1-c.price/c.origPrice)*100),tl=c.ll.reduce((a,s)=>a+s.l.length,0),td=c.ll.reduce((a,s)=>a+s.l.reduce((b,l)=>b+pD(l.d),0),0),sd=[Math.round(c.reviews*.02),Math.round(c.reviews*.04),Math.round(c.reviews*.1),Math.round(c.reviews*.34),Math.round(c.reviews*.5)];
+return`
+<div class="ch"><img src="https://picsum.photos/seed/${c.img}-hero/1400/500.jpg" alt="${c.title}"><div class="ch-ov"></div><div style="position:absolute;bottom:0;left:0;right:0;padding:20px 16px" class="container"><div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px"><span style="padding:3px 8px;border-radius:5px;background:rgba(8,8,12,.6);color:${c.levelColor};font-size:.7rem;font-weight:600;backdrop-filter:blur(8px)">${c.level}</span><span style="padding:3px 8px;border-radius:5px;background:rgba(8,8,12,.6);color:var(--fg-m);font-size:.7rem;font-weight:500;backdrop-filter:blur(8px)">${c.category}</span></div><h1 class="fd" style="font-size:clamp(1.3rem,3vw,2.2rem);font-weight:700;line-height:1.15">${c.title}</h1><div style="display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap"><img src="${LU}" alt="Miss Noe" style="width:24px;height:24px;border-radius:50%;border:1px solid var(--brd-l)"><span style="color:var(--fg-m);font-size:.86rem">${c.teacher}</span><span style="color:var(--brd-l)">·</span><span style="color:var(--fg-d);font-size:.82rem">${c.updated}</span></div><div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;font-size:.84rem"><span class="cc-rating"><span style="font-weight:700;color:var(--fg)">${c.rating}</span><i class="fas fa-star"></i><span style="color:var(--fg-d)">(${c.reviews.toLocaleString('es-ES')})</span></span><span style="color:var(--fg-d)"><i class="fas fa-users" style="margin-right:3px"></i>${c.students.toLocaleString('es-ES')}</span></div></div></div>
+<div class="container" style="padding-top:24px;padding-bottom:60px">
+<div style="display:grid;grid-template-columns:1fr;gap:24px">
+<div>
+<div class="rv" style="background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:20px;margin-bottom:24px"><h3 style="font-size:1.05rem;font-weight:700;margin-bottom:12px">Que vas a aprender</h3><div style="display:grid;grid-template-columns:1fr;gap:8px">${c.tags.map(t=>`<div class="feat-item"><i class="fas fa-check-circle"></i>${t}</div>`).join('')}</div></div>
+<div class="rv rvd1" style="margin-bottom:24px"><h3 style="font-size:1.05rem;font-weight:700;margin-bottom:12px">Temario</h3><div style="font-size:.78rem;color:var(--fg-d);margin-bottom:12px">${c.ll.length} secciones · ${tl} clases · ${Math.floor(td/60)}h ${td%60}min</div>${c.ll.map((sec,si)=>{const sD=sec.l.reduce((a,l)=>a+pD(l.d),0);return`<div style="background:var(--card);border:1px solid var(--brd);border-radius:10px;margin-bottom:6px;overflow:hidden"><button onclick="this.parentElement.classList.toggle('so');this.querySelector('.sa').classList.toggle('rot')" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:none;border:none;color:var(--fg);cursor:pointer;font-family:inherit;text-align:left;gap:8px"><div style="display:flex;align-items:center;gap:8px;min-width:0"><span style="font-size:.8rem;color:var(--fg-d);flex-shrink:0">${si+1}.</span><span style="font-size:.88rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${sec.s}</span></div><div style="display:flex;align-items:center;gap:8px;font-size:.74rem;color:var(--fg-d);flex-shrink:0"><span class="hidden sm:inline">${sec.l.length} clases</span><span class="hidden sm:inline">${Math.floor(sD/60)}h ${sD%60}min</span><i class="fas fa-chevron-down sa" style="font-size:.6rem;transition:transform .3s"></i></div></button><div style="max-height:0;overflow:hidden;transition:max-height .4s ease">${sec.l.map((l,li)=>{const gi=gLI(c,si,li),isF=l.free,cp=o||isF,dn=progress[c.id]?.cl?.has(gi);return`<div class="lr ${dn?'done':''}" onclick="${cp?`pL(${c.id},${gi})`:`nav('course-detail',${c.id})`}" style="${!cp?'opacity:.4':''}"><div class="lc"><i class="fas fa-check"></i></div><div style="flex:1;font-size:.84rem;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:${isF?'600':'400'}">${isF?'<span style="color:var(--rose);font-size:.66rem;margin-right:3px">GRATIS</span>':''}${l.t}</div><span style="font-size:.74rem;color:var(--fg-d);flex-shrink:0">${l.d}</span></div>`;}).join('')}</div></div><style>.so>div:last-child{max-height:2000px!important}</style>`;}).join('')}</div>
+<div class="rv rvd2"><h3 style="font-size:1.05rem;font-weight:700;margin-bottom:16px">Resenas</h3><div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:18px"><div style="text-align:center;min-width:100px"><div style="font-size:2.4rem;font-weight:800">${c.rating}</div><div style="color:var(--gold);font-size:.76rem;margin:2px 0"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><div style="font-size:.72rem;color:var(--fg-d)">${c.reviews.toLocaleString('es-ES')} resenas</div></div><div style="flex:1;min-width:160px;display:flex;flex-direction:column;gap:4px">${[5,4,3,2,1].map(s=>`<div style="display:flex;align-items:center;gap:6px;font-size:.72rem"><span style="width:8px;color:var(--fg-d)">${s}</span><i class="fas fa-star" style="color:var(--gold);font-size:.55rem"></i><div class="rb"><div class="rb-f" style="width:${c.reviews?Math.round(sd[s-1]/c.reviews*100):0}%"></div></div><span style="color:var(--fg-d);min-width:24px;text-align:right">${sd[s-1]}</span></div>`).join('')}</div></div>${(c.rl||[]).map(r=>`<div style="padding:16px 0;border-top:1px solid var(--brd)"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><img src="https://picsum.photos/seed/${r.img}/36/36.jpg" alt="${r.name}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0"><div style="min-width:0"><div style="font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.name}</div><div style="font-size:.7rem;color:var(--fg-d)">${r.date}</div></div><div style="margin-left:auto;color:var(--gold);font-size:.68rem;flex-shrink:0">${'<i class="fas fa-star"></i>'.repeat(r.r)}</div></div><p style="color:var(--fg-m);font-size:.86rem;line-height:1.7">${r.text}</p></div>`).join('')}</div>
+</div>
+<div class="sidebar-c rv"><div style="margin-bottom:16px"><span style="font-size:1.7rem;font-weight:800">$${c.price}</span><span style="font-size:.9rem;color:var(--fg-d);text-decoration:line-through;margin-left:6px">$${c.origPrice}</span><span style="display:inline-block;padding:2px 6px;background:var(--rose-g);color:var(--rose);font-size:.7rem;font-weight:700;border-radius:5px;margin-left:6px">${d}% OFF</span></div>${o?`<button class="btn-p" style="width:100%;justify-content:center;margin-bottom:8px" onclick="pL(${c.id},0)"><i class="fas fa-play"></i><span>Continuar</span></button>`:ic?`<button class="btn-o" style="width:100%;justify-content:center;margin-bottom:8px;opacity:.5;cursor:default"><i class="fas fa-check"></i><span>En tu carrito</span></button>`:`<button class="btn-p" style="width:100%;justify-content:center;margin-bottom:8px" onclick="aC(${c.id})"><i class="fas fa-shopping-bag"></i><span>Anadir al carrito</span></button>`}${!o?`<button class="btn-o" style="width:100%;justify-content:center" onclick="aC(${c.id});setTimeout(toggleCart,200)">Comprar ahora</button>`:''}<div style="margin-top:14px;font-size:.78rem;color:var(--fg-d);text-align:center">30 dias de garantia</div><div style="margin-top:18px;border-top:1px solid var(--brd);padding-top:16px;display:flex;flex-direction:column;gap:10px">${[{i:'fa-video',t:`${tl} horas de video`},{i:'fa-infinity',t:'Acceso de por vida'},{i:'fa-mobile-alt',t:'Multi-dispositivo'},{i:'fa-certificate',t:'Certificado al completar'},{i:'fa-download',t:'Recursos descargables'}].map(x=>`<div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--fg-m)"><i class="fas ${x.i}" style="color:var(--rose);width:15px;text-align:center;font-size:.75rem"></i>${x.t}</div>`).join('')}</div><div style="margin-top:16px;border-top:1px solid var(--brd);padding-top:16px;display:flex;align-items:center;gap:10px"><img src="${LU}" alt="Miss Noe" style="width:40px;height:40px;border-radius:50%;border:1px solid var(--brd-l);flex-shrink:0"><div><div style="font-weight:600;font-size:.86rem">Miss Noe</div><div style="font-size:.74rem;color:var(--fg-d)">Certificada TEFL/TESOL</div></div></div><div style="margin-top:12px;font-size:.8rem;color:var(--fg-m);line-height:1.6">${c.desc}</div></div>
+</div>
+</div></div>${rFT()}`;}
+
+function pD(d){const p=d.split(':').map(Number);return p.length===2?p[0]*60+p[1]:p[0]*3600+p[1]*60+p[2];}
+function gLI(c,si,li){let i=0;for(let j=0;j<si;j++)i+=c.ll[j].l.length;return i+li;}
+function gLB(c,gi){let n=0;for(let si=0;si<c.ll.length;si++)for(let li=0;li<c.ll[si].l.length;li++){if(n===gi)return{si,li,l:c.ll[si].l[li],s:c.ll[si].s};n++;}return null;}
+
+function pL(cid,li){if(!purchased.includes(cid)){const c=C.find(x=>x.id===cid),info=gLB(c,li);if(!info?.l?.free){showToast('Compra el curso para acceder');return;}}CC=cid;CL=li;if(!progress[cid])progress[cid]={cl:new Set(),cu:0};progress[cid].cu=li;save();nav('player');}
+
+function rPL(){
+const c=C.find(x=>x.id===CC);if(!c)return'';
+const info=gLB(c,CL);if(!info)return'';
+const tl=c.ll.reduce((a,s)=>a+s.l.length,0),dn=progress[c.id]?.cl?.size||0,pct=tl>0?Math.round(dn/tl*100):0;
+return`<div style="padding-top:60px"><div class="container" style="display:grid;grid-template-columns:1fr;gap:16px">
+<div>
+<div class="pw"><div class="pp"><img src="https://picsum.photos/seed/${c.img}-vid/800/450.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.15"><div style="position:relative;z-index:1;text-align:center"><div style="width:56px;height:56px;border-radius:50%;background:var(--rose);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onclick="sP()"><i class="fas fa-play" style="color:#fff;font-size:1.1rem;margin-left:3px"></i></div><p style="font-size:.82rem;color:var(--fg-d);margin-top:4px">Reproductor de video</p></div></div></div>
+<div class="pc"><button style="background:none;border:none;color:var(--fg-m);cursor:pointer;padding:2px" onclick="sP()"><i class="fas fa-play" style="font-size:.85rem"></i></button><span style="font-size:.72rem;color:var(--fg-d);flex-shrink:0">0:00</span><div class="pb"><div class="pb-f" id="pF"></div></div><span style="font-size:.72rem;color:var(--fg-d);flex-shrink:0">${info.l.d}</span><button style="background:none;border:none;color:var(--fg-m);cursor:pointer;padding:2px"><i class="fas fa-volume-up" style="font-size:.85rem"></i></button><button style="background:none;border:none;color:var(--fg-m);cursor:pointer;padding:2px"><i class="fas fa-expand" style="font-size:.85rem"></i></button></div>
+<div style="padding:14px 0"><div style="font-size:.7rem;color:var(--rose);font-weight:600;margin-bottom:2px">${info.s}</div><h2 style="font-size:clamp(1rem,2.5vw,1.15rem);font-weight:700;margin-bottom:8px">${info.l.t}</h2><div style="display:flex;gap:12px;font-size:.78rem;color:var(--fg-d)"><span><i class="far fa-clock" style="margin-right:2px"></i>${info.l.d}</span><span>Leccion ${CL+1} de ${tl}</span></div></div>
+<div style="display:flex;gap:8px;padding-bottom:16px;border-bottom:1px solid var(--brd)"><button class="btn-o btn-sm" ${CL===0?'disabled style="opacity:.3;pointer-events:none"':''} onclick="pL(${c.id},${CL-1})"><i class="fas fa-arrow-left" style="font-size:.7rem"></i><span>Anterior</span></button><button class="btn-o btn-sm" style="margin-left:auto" ${CL>=tl-1?'disabled style="opacity:.3;pointer-events:none"':''} onclick="pL(${c.id},${CL+1})"><span>Siguiente</span><i class="fas fa-arrow-right" style="font-size:.7rem"></i></button></div>
+<div style="padding:14px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px"><button class="btn-p btn-sm" onclick="mC(${c.id},${CL})"><i class="fas ${progress[c.id]?.cl?.has(CL)?'fa-check-circle':'fa-circle'}"></i><span>${progress[c.id]?.cl?.has(CL)?'Completada':'Marcar completada'}</span></button><div style="font-size:.82rem;color:var(--fg-d)">Progreso: <strong style="color:var(--rose)">${pct}%</strong></div></div>
+</div>
+<div class="pt-sidebar"><div style="padding:14px;border-bottom:1px solid var(--brd)"><div style="font-weight:700;font-size:.9rem;margin-bottom:1px">Temario</div><div style="font-size:.74rem;color:var(--fg-d);margin-bottom:6px">${dn}/${tl} · ${pct}%</div><div style="height:3px;background:var(--brd);border-radius:99px;overflow:hidden"><div style="height:100%;width:${pct}%;background:var(--rose);border-radius:99px;transition:width .5s"></div></div></div>${c.ll.map((sec,si)=>`<div><div style="padding:8px 14px;font-size:.72rem;color:var(--fg-d);font-weight:600;background:var(--bg2)">${si+1}. ${sec.s}</div>${sec.l.map((l,li)=>{const gi=gLI(c,si,li),cur=gi===CL,d=progress[c.id]?.cl?.has(gi),cp=purchased.includes(c.id)||l.free;return`<div onclick="${cp?`pL(${c.id},${gi})`:`showToast('Compra el curso')`}" style="display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;font-size:.78rem;border-left:3px solid ${cur?'var(--rose)':'transparent'};background:${cur?'var(--rose-g)':'transparent'};transition:background .2s;${!cp?'opacity:.3':''}"><div class="lc ${d?'done':''}" style="width:16px;height:16px;min-width:16px;font-size:.45rem"><i class="fas fa-check"></i></div><div style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:${cur?'var(--rose)':'var(--fg-m)'}">${l.t}</div><span style="font-size:.68rem;color:var(--fg-d);flex-shrink:0">${l.d}</span></div>`;}).join('')}</div>`).join('')}</div>
+</div></div></div>`;}
+function sP(){const f=document.getElementById('pF');if(!f)return;f.style.width='0%';let w=0;const iv=setInterval(()=>{w+=.5;f.style.width=w+'%';if(w>=100)clearInterval(iv);},50);}
+function mC(cid,li){if(!progress[cid])progress[cid]={cl:new Set(),cu:0};if(progress[cid].cl.has(li))progress[cid].cl.delete(li);else progress[cid].cl.add(li);save();render();const c=C.find(x=>x.id===cid),tl=c.ll.reduce((a,s)=>a+s.l.length,0);if(progress[cid].cl.size===tl)showToast('Felicidades! Curso completado');}
+
+function rDash(){
+const my=C.filter(c=>purchased.includes(c.id));
+return`<section style="padding:80px 0 60px"><div class="container"><div class="sl rv">Tu espacio</div><h1 class="st fd rv rvd1">Mis Cursos</h1>
+ ${my.length===0?`<div style="text-align:center;padding:60px 16px"><div style="width:64px;height:64px;border-radius:16px;background:var(--card);border:1px solid var(--brd);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px"><i class="fas fa-book-open" style="font-size:1.2rem;color:var(--fg-d)"></i></div><h3 style="font-size:1.1rem;font-weight:600;margin-bottom:6px">Aun no tienes cursos</h3><p style="color:var(--fg-d);margin-bottom:20px;font-size:.9rem">Explora el catalogo.</p><button class="btn-p" onclick="nav('catalog')"><span>Explorar cursos</span><i class="fas fa-arrow-right" style="font-size:.75rem"></i></button></div>`
+:`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">${my.map((c,i)=>{const tl=c.ll.reduce((a,s)=>a+s.l.length,0),dn=progress[c.id]?.cl?.size||0,pct=Math.round(dn/tl*100),ll=progress[c.id]?.cu||0,li=gLB(c,ll);return`<div class="dc rv rvd${Math.min(i+1,4)}" onclick="pL(${c.id},${ll})"><div style="display:flex;gap:12px;margin-bottom:12px"><img src="https://picsum.photos/seed/${c.img}/120/80.jpg" alt="${c.title}" style="width:88px;height:58px;border-radius:9px;object-fit:cover;flex-shrink:0"><div style="flex:1;min-width:0"><div style="font-size:.68rem;color:${c.levelColor};font-weight:600;margin-bottom:1px">${c.level}</div><div style="font-size:.88rem;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${c.title}</div></div></div>${li?`<div style="font-size:.76rem;color:var(--fg-d);margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><i class="fas fa-play-circle" style="color:var(--rose);margin-right:4px"></i>${li.l.t}</div>`:''}<div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:4px;background:var(--brd);border-radius:99px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${pct===100?'var(--gold)':'var(--rose)'};border-radius:99px;transition:width .5s"></div></div><span style="font-size:.74rem;font-weight:600;color:${pct===100?'var(--gold)':'var(--rose)'};min-width:32px;text-align:right">${pct}%</span></div></div>`;}).join('')}</div>`}
+</div></section>${rFT()}`;}
+
+function aC(id){if(purchased.includes(id))return showToast('Ya tienes este curso');if(cart.find(x=>x.id===id))return showToast('Ya esta en tu carrito');const c=C.find(x=>x.id===id);cart.push({id:c.id,price:c.price});save();uCB();render();showToast(`"${c.title}" anadido`);}
+function rC(id){cart=cart.filter(x=>x.id!==id);save();uCB();rCDr();if(['course-detail','catalog','home'].includes(V))render();}
+function uCB(){const b=document.getElementById('cartBadge');b.textContent=cart.length;b.classList.toggle('show',cart.length>0);}
+function toggleCart(){document.getElementById('cd').classList.toggle('open');document.getElementById('co').classList.toggle('open');if(document.getElementById('cd').classList.contains('open'))rCDr();}
+function rCDr(){const it=document.getElementById('cartItems'),ft=document.getElementById('cartFooter');if(!cart.length){it.innerHTML=`<div style="padding:40px 16px;text-align:center;color:var(--fg-d)"><i class="fas fa-shopping-bag" style="font-size:1.6rem;margin-bottom:12px;display:block"></i>Tu carrito esta vacio</div>`;ft.innerHTML='';return;}it.innerHTML=cart.map(ci=>{const c=C.find(x=>x.id===ci.id);return`<div class="ci"><img src="https://picsum.photos/seed/${c.img}/72/52.jpg" alt="" style="width:56px;height:40px;border-radius:7px;object-fit:cover;flex-shrink:0"><div style="flex:1;min-width:0"><div style="font-size:.82rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.title}</div><div style="font-size:.74rem;color:var(--fg-d)">${c.teacher}</div><div style="font-size:.86rem;font-weight:700;margin-top:2px">$${c.price}</div></div><button class="btn-danger" onclick="rC(${c.id})"><i class="fas fa-trash-alt" style="font-size:.7rem"></i></button></div>`;}).join('');const total=cart.reduce((a,ci)=>a+ci.price,0);ft.innerHTML=`<div style="display:flex;justify-content:space-between;margin-bottom:12px;font-size:.86rem"><span style="color:var(--fg-m)">Total:</span><span style="font-size:1.1rem;font-weight:800">$${total.toFixed(2)}</span></div><button class="btn-p" style="width:100%;justify-content:center" onclick="chk()"><span>Proceder al pago</span><i class="fas fa-lock" style="font-size:.68rem"></i></button><div style="text-align:center;font-size:.72rem;color:var(--fg-d);margin-top:6px">Pago seguro SSL</div>`;}
+function chk(){if(!cart.length)return;const total=cart.reduce((a,ci)=>a+ci.price,0);toggleCart();cart.forEach(ci=>{if(!purchased.includes(ci.id))purchased.push(ci.id);if(!progress[ci.id])progress[ci.id]={cl:new Set(),cu:0};});cart=[];save();uCB();const box=document.getElementById('mb');box.innerHTML=`<button onclick="closeModal()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:var(--fg-d);font-size:1rem;cursor:pointer;padding:4px"><i class="fas fa-times"></i></button><div style="text-align:center"><div style="width:56px;height:56px;border-radius:50%;background:var(--rose-g);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px"><i class="fas fa-check" style="color:var(--rose);font-size:1.3rem"></i></div><h3 class="fd" style="font-size:1.3rem;font-weight:700;margin-bottom:6px">Compra exitosa</h3><p style="color:var(--fg-m);font-size:.88rem;margin-bottom:2px">Total: <strong style="color:var(--fg)">$${total.toFixed(2)}</strong></p><p style="color:var(--fg-d);font-size:.82rem;margin-bottom:22px">Acceso de por vida.</p><button class="btn-p" style="width:100%;justify-content:center" onclick="closeModal();nav('dashboard')"><span>Ir a Mis Cursos</span><i class="fas fa-arrow-right" style="font-size:.75rem"></i></button></div>`;document.getElementById('mo').classList.add('active');document.body.style.overflow='hidden';}
+
+function openModal(){const box=document.getElementById('mb');box.innerHTML=`<button onclick="closeModal()" style="position:absolute;top:12px;right:12px;background:none;border:none;color:var(--fg-d);font-size:1rem;cursor:pointer;padding:4px"><i class="fas fa-times"></i></button><div style="text-align:center;margin-bottom:20px"><div style="width:42px;height:42px;border-radius:13px;background:var(--rose-g);display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px"><i class="fas fa-user-plus" style="color:var(--rose);font-size:.9rem"></i></div><h3 class="fd" style="font-size:1.25rem;font-weight:700">Crear cuenta</h3><p style="color:var(--fg-d);font-size:.8rem;margin-top:2px">Guarda tu progreso</p></div><form onsubmit="event.preventDefault();closeModal();showToast('Bienvenido a Miss Noe Online English')" style="display:flex;flex-direction:column;gap:10px"><input class="mi" type="text" placeholder="Nombre completo" required><input class="mi" type="email" placeholder="Correo electronico" required><input class="mi" type="password" placeholder="Contrasena" required><button type="submit" class="btn-p" style="width:100%;justify-content:center;margin-top:2px"><span>Registrarme</span></button></form><p style="text-align:center;font-size:.74rem;color:var(--fg-d);margin-top:10px">Ya tienes cuenta? <a href="#" onclick="event.preventDefault();closeModal();showToast('Inicio de sesion simulado')" style="color:var(--rose);text-decoration:none">Inicia sesion</a></p>`;document.getElementById('mo').classList.add('active');document.body.style.overflow='hidden';}
+function closeModal(){document.getElementById('mo').classList.remove('active');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();if(document.getElementById('cd').classList.contains('open'))toggleCart();}});
+
+function showToast(msg){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+
+function rFT(){return`<footer style="border-top:1px solid var(--brd);padding:36px 0 24px;margin-top:30px"><div class="container"><div class="ft-grid" style="margin-bottom:28px"><div><div class="logo-w" style="margin-bottom:10px"><img src="${LU}" alt="Miss Noe" style="width:28px;height:28px"><div class="logo-t"><span class="logo-n" style="font-size:.8rem">Miss Noe</span><span class="logo-s">Online English</span></div></div><p style="color:var(--fg-d);font-size:.78rem;line-height:1.6">Cursos de ingles pregrabados. Aprende a tu ritmo con Miss Noe.</p></div><div><div style="font-weight:600;font-size:.78rem;margin-bottom:8px;color:var(--fg)">Plataforma</div><div style="display:flex;flex-direction:column;gap:6px"><a href="#" onclick="event.preventDefault();nav('catalog')" style="color:var(--fg-d);text-decoration:none;font-size:.82rem">Cursos</a><a href="#" onclick="event.preventDefault();nav('dashboard')" style="color:var(--fg-d);text-decoration:none;font-size:.82rem">Mis Cursos</a></div></div><div><div style="font-weight:600;font-size:.78rem;margin-bottom:8px;color:var(--fg)">Legal</div><div style="display:flex;flex-direction:column;gap:6px"><a href="#" style="color:var(--fg-d);text-decoration:none;font-size:.82rem">Privacidad</a><a href="#" style="color:var(--fg-d);text-decoration:none;font-size:.82rem">Terminos</a><a href="#" style="color:var(--fg-d);text-decoration:none;font-size:.82rem">Devoluciones</a></div></div><div><div style="font-weight:600;font-size:.78rem;margin-bottom:8px;color:var(--fg)">Contacto</div><div style="display:flex;flex-direction:column;gap:6px"><a href="#" style="color:var(--fg-d);text-decoration:none;font-size:.82rem">hola@missnoe.com</a><a href="#" style="color:var(--fg-d);text-decoration:none;font-size:.82rem">Soporte</a></div></div></div><div style="border-top:1px solid var(--brd);padding-top:16px;text-align:center;font-size:.74rem;color:var(--fg-d)">2025 Miss Noe Online English. Todos los derechos reservados.</div></div></footer>`;}
+
+uCB();render();
+</script>
+</body>
+</html>
