@@ -193,6 +193,16 @@
         @media(min-width:640px){.ft-grid{grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}}
 
         .si{display:none}@media(min-width:640px){.si{display:inline}}
+
+        /* ===== CONTACT DOCK ===== */
+        .cdock{position:fixed;bottom:20px;left:16px;z-index:50;display:flex;flex-direction:column;gap:6px}
+        @media(min-width:640px){.cdock{bottom:24px;left:24px;gap:8px}}
+        .cdock-btn{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(19,19,27,.88);border:1px solid var(--brd);border-radius:12px;text-decoration:none;color:var(--fg-m);font-size:.78rem;font-weight:500;transition:all .25s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+        @media(min-width:640px){.cdock-btn{padding:11px 16px;font-size:.82rem;border-radius:14px}}
+        .cdock-btn:hover{background:var(--rose-g);border-color:var(--rose);color:var(--fg);transform:translateX(3px);box-shadow:0 6px 24px rgba(224,122,168,.15)}
+        .cdock-btn:focus{outline:2px solid var(--rose);outline-offset:2px}
+        .cdock-btn i{font-size:1rem;flex-shrink:0}
+        @media(max-width:479px){.cdock .ct{overflow:hidden;width:0;opacity:0;transition:opacity .25s,width .25s}.cdock-btn:hover .ct,.cdock-btn:focus .ct{width:auto;opacity:1}}
     </style>
 </head>
 <body>
@@ -423,5 +433,16 @@ function rFT(){return`<footer style="border-top:1px solid var(--brd);padding:36p
 
 uCB();render();
 </script>
+
+<div class="cdock">
+    <a class="cdock-btn" href="https://wa.me/541151424362" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp" style="color:#25D366"></i>
+        <span class="ct">Contactar por WhatsApp</span>
+    </a>
+    <a class="cdock-btn" href="mailto:missnoemoni@gmail.com" aria-label="Enviar email">
+        <i class="far fa-envelope" style="color:var(--rose)"></i>
+        <span class="ct">Enviar email</span>
+    </a>
+</div>
 </body>
 </html>
